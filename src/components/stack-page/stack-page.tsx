@@ -45,7 +45,12 @@ export const StackPage: React.FC = () => {
       <div className={styles.main}>
         <Input placeholder="Введите значение" value={value} onChange={onChange} maxLength={4} isLimitText={true} />
         <Button text="Добавить" disabled={value.length > 0 ? false : true} onClick={enqueue} isLoader={loader.add} />
-        <Button text="Удалить" disabled={stack.getData().length > 0 ? false : true} onClick={dequeue} isLoader={loader.delete} />
+        <Button
+          text="Удалить"
+          disabled={stack.getData().length > 0 ? false : true}
+          onClick={dequeue}
+          isLoader={loader.delete}
+        />
         <Button
           text="Очистить"
           disabled={stack.getData().length > 0 ? false : true}
@@ -57,6 +62,7 @@ export const StackPage: React.FC = () => {
         {stack.getData().map((letter, i) => {
           return (
             <Circle
+              extraClass={styles.circle}
               letter={letter}
               key={i}
               state={color && i === stack.getData().length - 1 ? ElementStates.Changing : ElementStates.Default}

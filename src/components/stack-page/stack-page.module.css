@@ -1,16 +1,21 @@
 .main {
-    max-width: 980px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    gap: 8px;
+  max-width: 980px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
 }
 
 .resetButton {
-    margin-left: 72px;
+  margin-left: 72px;
 }
 .circleContainer {
-    display: flex;
-    justify-content: center;
-    gap: 16px
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+.circle {
+  padding-bottom: 16px;
 }

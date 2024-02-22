@@ -12,7 +12,7 @@ export const SortingPage: React.FC = () => {
   const [arr, setArr] = React.useState<number[]>([]);
   const [columnStates, setColumnStates] = React.useState<ElementStates[]>([]);
   const [isLocked, setLocked] = React.useState(false);
-  const [selectedRadio, setSelectedRadio] = React.useState("bubble");
+  const [selectedRadio, setSelectedRadio] = React.useState("selection");
   const [loader, setLoader] = React.useState("");
   const handleRadioChange = (value: string) => {
     setSelectedRadio(value);
@@ -90,6 +90,7 @@ export const SortingPage: React.FC = () => {
     colors.fill(ElementStates.Modified);
     setColumnStates([...colors]);
     setLocked(false);
+    setLoader("");
   };
 
   const selectionSort = async (direction: Direction) => {
@@ -142,6 +143,7 @@ export const SortingPage: React.FC = () => {
     colors.fill(ElementStates.Modified);
     setColumnStates([...colors]);
     setLocked(false);
+    setLoader("");
   };
 
   const handleSort = (direction: Direction) => {

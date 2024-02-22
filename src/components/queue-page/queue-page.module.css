@@ -13,5 +13,5 @@
 .circleContainer {
     display: flex;
     justify-content: center;
-    gap: 16px
+    gap: 16px;
 }

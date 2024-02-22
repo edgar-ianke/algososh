@@ -27,7 +27,7 @@ export const FibonacciPage: React.FC = () => {
     let counter = 0;
     while (counter < n) {
       await new Promise((resolve) => setTimeout(resolve, SHORT_DELAY_IN_MS));
-      if (counter === n - 2) {
+      if (counter === n - 1) {
         break
       }
       if (n === 1) {
