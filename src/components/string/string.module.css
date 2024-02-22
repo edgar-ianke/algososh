@@ -1,0 +1,12 @@
+.input {
+  justify-content: center;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 377px 133px;
+}
+.circleContainer {
+  display: flex;
+  justify-content: center;
+  gap: 16px
+
+}
