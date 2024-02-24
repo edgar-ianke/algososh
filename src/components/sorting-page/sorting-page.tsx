@@ -7,6 +7,7 @@ import { Direction } from "../../types/direction";
 import { Column } from "../ui/column/column";
 import { DELAY_IN_MS, SHORT_DELAY_IN_MS } from "../../constants/delays";
 import { ElementStates } from "../../types/element-states";
+import { delay } from "../../utils/utils";
 
 export const SortingPage: React.FC = () => {
   const [arr, setArr] = React.useState<number[]>([]);
@@ -34,6 +35,10 @@ export const SortingPage: React.FC = () => {
     setArr([...arr!]);
   }
 
+  React.useEffect(() => {
+    generateArr();
+  }, []);
+
   const bubbleSort = async (direction: Direction) => {
     setLocked(true);
     let colors = columnStates;
@@ -47,7 +52,7 @@ export const SortingPage: React.FC = () => {
           colors[j] = ElementStates.Changing;
           colors[j + 1] = ElementStates.Changing;
           setColumnStates([...colors]);
-          await new Promise((resolve) => setTimeout(resolve, DELAY_IN_MS));
+          await delay(DELAY_IN_MS);
           if (arr![j] > arr![j + 1]) {
             swap(arr!, j, j + 1);
             swapped = true;
@@ -66,7 +71,7 @@ export const SortingPage: React.FC = () => {
           colors[j] = ElementStates.Changing;
           colors[j + 1] = ElementStates.Changing;
           setColumnStates([...colors]);
-          await new Promise((resolve) => setTimeout(resolve, DELAY_IN_MS));
+          await delay(DELAY_IN_MS);
           if (arr![j] < arr![j + 1]) {
             swap(arr!, j, j + 1);
             swapped = true;
@@ -107,7 +112,7 @@ export const SortingPage: React.FC = () => {
         for (let j = i + 1; j < length; j++) {
           colors[j] = ElementStates.Changing;
           setColumnStates([...colors]);
-          await new Promise((resolve) => setTimeout(resolve, DELAY_IN_MS));
+          await delay(DELAY_IN_MS);
           if (arr[j] < arr[minInd]) {
             minInd = j;
           }
@@ -127,7 +132,7 @@ export const SortingPage: React.FC = () => {
         for (let j = i + 1; j < length; j++) {
           colors[j] = ElementStates.Changing;
           setColumnStates([...colors]);
-          await new Promise((resolve) => setTimeout(resolve, DELAY_IN_MS));
+          await delay(DELAY_IN_MS);
           if (arr[j] > arr[minInd]) {
             minInd = j;
           }

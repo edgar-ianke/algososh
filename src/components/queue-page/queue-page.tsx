@@ -7,6 +7,7 @@ import { Circle } from "../ui/circle/circle";
 import { ElementStates } from "../../types/element-states";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 import { Queue } from "../../utils/queue";
+import { delay } from "../../utils/utils";
 
 export const QueuePage: React.FC = () => {
   const [queue, setQueue] = React.useState(new Queue<string>(7));
@@ -21,7 +22,7 @@ export const QueuePage: React.FC = () => {
     setLoader({ ...loader, add: true });
     columnStates[queue.tail] = ElementStates.Changing;
     setColumnStates([...columnStates]);
-    await new Promise((resolve) => setTimeout(resolve, SHORT_DELAY_IN_MS));
+    await delay(SHORT_DELAY_IN_MS);
     columnStates[queue.tail] = ElementStates.Default;
     setColumnStates([...columnStates]);
     queue.enqueue(value);
@@ -33,7 +34,7 @@ export const QueuePage: React.FC = () => {
     setLoader({ ...loader, delete: true });
     columnStates[queue.head] = ElementStates.Changing;
     setColumnStates([...columnStates]);
-    await new Promise((resolve) => setTimeout(resolve, SHORT_DELAY_IN_MS));
+    await delay(SHORT_DELAY_IN_MS);
     columnStates[queue.head] = ElementStates.Default;
     setColumnStates([...columnStates]);
     queue.dequeue();
@@ -44,7 +45,7 @@ export const QueuePage: React.FC = () => {
     setLoader({ ...loader, reset: true });
     columnStates.fill(ElementStates.Changing);
     setColumnStates([...columnStates]);
-    await new Promise((resolve) => setTimeout(resolve, SHORT_DELAY_IN_MS));
+    await delay(SHORT_DELAY_IN_MS);
     columnStates.fill(ElementStates.Default);
     setColumnStates([...columnStates]);
     queue.reset();

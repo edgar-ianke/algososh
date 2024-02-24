@@ -5,6 +5,7 @@ import { Input } from "../ui/input/input";
 import { Circle } from "../ui/circle/circle";
 import { Button } from "../ui/button/button";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
+import { delay } from "../../utils/utils";
 
 export const FibonacciPage: React.FC = () => {
   const [sequence, setSequence] = React.useState<string[]>([]);
@@ -26,7 +27,7 @@ export const FibonacciPage: React.FC = () => {
     let res;
     let counter = 0;
     while (counter < n) {
-      await new Promise((resolve) => setTimeout(resolve, SHORT_DELAY_IN_MS));
+      await delay(SHORT_DELAY_IN_MS)
       if (counter === n - 1) {
         break
       }
@@ -46,6 +47,7 @@ export const FibonacciPage: React.FC = () => {
 
   const handleClick = () => {
     fibonacci(parseInt(value));
+    setValue('')
   };
 
   return (
@@ -59,7 +61,7 @@ export const FibonacciPage: React.FC = () => {
           type="number"
           isLimitText={true}
         />
-        <Button text="Рассчитать" onClick={handleClick} disabled={isLocked} />
+        <Button text="Рассчитать" onClick={handleClick} disabled={isLocked} isLoader={isLocked}/>
       </div>
       <ul className={styles.circleContainer}>
         {sequence.map((item, i) => {

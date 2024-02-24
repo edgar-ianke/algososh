@@ -6,11 +6,12 @@ import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
 import { ElementStates } from "../../types/element-states";
 import { DELAY_IN_MS } from "../../constants/delays";
+import { delay } from "../../utils/utils";
 
 export const StringComponent: React.FC = () => {
+  const [locked, setLocked] = React.useState(false);
   const [string, setString] = React.useState<string[]>([]);
   const [circleStates, setCircleStates] = React.useState<ElementStates[]>([]);
-  const [isLocked, setLocked] = React.useState(false);
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setString(e.target.value.split(""));
     setCircleStates(new Array(e.target.value.length).fill(ElementStates.Default));
@@ -32,27 +33,27 @@ export const StringComponent: React.FC = () => {
 }
 
   const handleClick = async () => {
-    setCircleStates(circleStates.fill(ElementStates.Default));
     setLocked(true);
+    setCircleStates(circleStates.fill(ElementStates.Default));
     let res = string;
     let end = string.length - 1;
     let start = 0;
     while (start <= end) {
       swap(res, start, end);
       changeColor(ElementStates.Changing, start, end)
-      await new Promise((resolve) => setTimeout(resolve, DELAY_IN_MS));
+      await delay(DELAY_IN_MS);
       changeColor(ElementStates.Modified, start, end)
       setString([...res]);
       start++;
       end--;
     }
-    setLocked(false);
+   setLocked(false);
   };
   return (
     <SolutionLayout title="Строка">
       <div className={styles.input}>
         <Input placeholder="Введите текст" value={string.join("")} onChange={onChange} maxLength={11} isLimitText={true}/>
-        <Button text="Развернуть" onClick={handleClick} disabled={isLocked} />
+        <Button text="Развернуть" onClick={handleClick} isLoader={locked} disabled={string.length > 0 && !locked ? false : true} />
       </div>
       <ul className={styles.circleContainer}>
         {string.map((letter, i) => {

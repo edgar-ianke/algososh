@@ -9,6 +9,7 @@ import { LinkedList } from "../../utils/linked-list";
 import { mockedList, mockedListSize } from "../../constants/mocked-list";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 import { ElementStates } from "../../types/element-states";
+import { delay } from "../../utils/utils";
 
 export const ListPage: React.FC = () => {
   const [list] = React.useState(new LinkedList<string>(mockedList, mockedListSize));
@@ -37,7 +38,9 @@ export const ListPage: React.FC = () => {
     setValue(e.target.value);
   };
   const onIndexChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIndex(e.target.value);
+    if (+e.target.value >= 0 && +e.target.value < list.getSize()) {
+      setIndex(e.target.value);
+    }
   };
   const append = async () => {
     setLoader({ ...loader, addTail: true });
@@ -45,14 +48,14 @@ export const ListPage: React.FC = () => {
       ...head,
       [data.length - 1]: { value: <Circle letter={value} isSmall={true} state={ElementStates.Changing} /> },
     });
-    await new Promise((resolve) => setTimeout(resolve, SHORT_DELAY_IN_MS));
+    await delay(SHORT_DELAY_IN_MS);
     setHead({ 0: { value: "head" } });
     setTail({ [data.length]: { value: "tail" } });
     list.append(value);
     setData(list.showValues());
     setValue("");
     setHighlightIndex({ index: [data.length], color: ElementStates.Modified });
-    await new Promise((resolve) => setTimeout(resolve, SHORT_DELAY_IN_MS));
+    await delay(SHORT_DELAY_IN_MS);
     setHighlightIndex({ index: [], color: null });
     setLoader({ ...loader, addTail: false });
   };
@@ -61,7 +64,7 @@ export const ListPage: React.FC = () => {
     setHead({
       0: { value: <Circle letter={value} isSmall={true} state={ElementStates.Changing} /> },
     });
-    await new Promise((resolve) => setTimeout(resolve, SHORT_DELAY_IN_MS));
+    await delay(SHORT_DELAY_IN_MS);
     setHead({
       0: { value: "head" },
     });
@@ -70,7 +73,7 @@ export const ListPage: React.FC = () => {
     setData(list.showValues());
     setValue("");
     setHighlightIndex({ index: [0], color: ElementStates.Modified });
-    await new Promise((resolve) => setTimeout(resolve, SHORT_DELAY_IN_MS));
+    await delay(SHORT_DELAY_IN_MS);
     setHighlightIndex({ index: [], color: null });
     setLoader({ ...loader, addHead: false });
   };
@@ -79,7 +82,7 @@ export const ListPage: React.FC = () => {
     setTail({ ...tail, [0]: { value: <Circle letter={data[0]} isSmall={true} state={ElementStates.Changing} /> } });
     data[0] = "";
     setData([...data]);
-    await new Promise((resolve) => setTimeout(resolve, SHORT_DELAY_IN_MS));
+    await delay(SHORT_DELAY_IN_MS);
     list.deleteAt(0);
     setData(list.showValues());
     setTail({ [list.getSize() - 1]: { value: "tail" } });
@@ -94,7 +97,7 @@ export const ListPage: React.FC = () => {
     });
     data[data.length - 1] = "";
     setData([...data]);
-    await new Promise((resolve) => setTimeout(resolve, SHORT_DELAY_IN_MS));
+    await delay(SHORT_DELAY_IN_MS);
     list.deleteAt(list.getSize() - 1);
     setData(list.showValues());
     setTail({ [list.getSize() - 1]: { value: "tail" } });
@@ -113,7 +116,7 @@ export const ListPage: React.FC = () => {
           index: [...prevState.index, i + 1],
           color: ElementStates.Changing,
         }));
-        await new Promise((resolve) => setTimeout(resolve, SHORT_DELAY_IN_MS));
+        await delay(SHORT_DELAY_IN_MS);
       }
       setHead({
         0: { value: "head" },
@@ -123,7 +126,7 @@ export const ListPage: React.FC = () => {
       setValue("");
       setHighlightIndex({ index: [i], color: ElementStates.Modified });
       setTail({ [list.getSize() - 1]: { value: "tail" } });
-      await new Promise((resolve) => setTimeout(resolve, SHORT_DELAY_IN_MS));
+      await delay(SHORT_DELAY_IN_MS);
       setHighlightIndex({ index: [], color: null });
       setIndex("");
       setLoader({ ...loader, addIndex: false });
@@ -138,12 +141,12 @@ export const ListPage: React.FC = () => {
           index: [...prevState.index, i + 1],
           color: ElementStates.Changing,
         }));
-        await new Promise((resolve) => setTimeout(resolve, SHORT_DELAY_IN_MS));
+        await delay(SHORT_DELAY_IN_MS);
       }
       setTail({ ...tail, [i]: { value: <Circle letter={data[i]} isSmall={true} state={ElementStates.Changing} /> } });
       data[i] = "";
       setData([...data]);
-      await new Promise((resolve) => setTimeout(resolve, SHORT_DELAY_IN_MS));
+      await delay(SHORT_DELAY_IN_MS);
       setHighlightIndex({ index: [], color: null });
       list.deleteAt(ind);
       setData(list.showValues());
@@ -192,15 +195,7 @@ export const ListPage: React.FC = () => {
           />
         </div>
         <div className={styles.secondRow}>
-          <Input
-            name="index"
-            placeholder="Введите индекс"
-            value={index}
-            type="number"
-            onChange={onIndexChange}
-            min={0}
-            max={list.getSize() - 1}
-          />
+          <Input name="index" placeholder="Введите индекс" value={index} type="number" onChange={onIndexChange} />
           <Button
             text="Добавить по индексу"
             onClick={insertAt}
