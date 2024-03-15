@@ -1,0 +1,18 @@
+.input {
+    justify-content: center;
+    display: grid;
+    gap: 12px;
+    grid-template-columns: 377px 133px;
+}
+
+.circleContainer {
+    margin: 0 auto;
+    justify-content: center;
+    display: flex;
+    gap: 16px;
+    max-width: 1040px;
+    flex-wrap: wrap;
+}
+.circle {
+    padding-top: 24px;
+}

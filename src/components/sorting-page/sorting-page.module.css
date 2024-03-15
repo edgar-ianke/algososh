@@ -1,0 +1,26 @@
+.main {
+  max-width: 980px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.radio1 {
+  padding-right: 40px;
+}
+.button1 {
+  margin-left: 52px;
+  margin-right: 12px;
+}
+.newArr {
+  margin-left: 80px;
+}
+.columns {
+  padding-top: 24px;
+  justify-content: center;
+  display: flex;
+  gap: 10px;
+  height: 340px;
+  align-items: flex-end;
+}
+

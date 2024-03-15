@@ -1,0 +1,28 @@
+.main {
+    margin: 0 auto;
+    width: 952px;
+}
+
+.firstRow {
+    display: grid;
+    grid-template-columns: 204px repeat(4, 175px);
+    gap: 10px;
+    margin-bottom: 12px;
+}
+.secondRow {
+    display: grid;
+    grid-template-columns: 204px repeat(2, 362px);
+    gap: 10px
+}
+.circleContainer {
+    max-width: 100%;
+    padding-top: 82px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+.circle {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
