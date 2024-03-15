@@ -5,11 +5,15 @@ import styles from "./sorting-page.module.css";
 import { Button } from "../ui/button/button";
 import { Direction } from "../../types/direction";
 import { Column } from "../ui/column/column";
-import { DELAY_IN_MS, SHORT_DELAY_IN_MS } from "../../constants/delays";
+import { DELAY_IN_MS } from "../../constants/delays";
 import { ElementStates } from "../../types/element-states";
 import { delay } from "../../utils/utils";
 
-export const SortingPage: React.FC = () => {
+interface SortingPageProps {
+  array?: number[] | null; // Определите тип пропса, если он должен быть необязательным
+}
+
+export const SortingPage: React.FC<SortingPageProps> = ({ array = null }) => {
   const [arr, setArr] = React.useState<number[]>([]);
   const [columnStates, setColumnStates] = React.useState<ElementStates[]>([]);
   const [isLocked, setLocked] = React.useState(false);
@@ -36,7 +40,7 @@ export const SortingPage: React.FC = () => {
   }
 
   React.useEffect(() => {
-    generateArr();
+    array ? setArr(array) : generateArr();
   }, []);
 
   const bubbleSort = async (direction: Direction) => {
@@ -201,9 +205,9 @@ export const SortingPage: React.FC = () => {
         />
         <Button text="Новый массив" extraClass={styles.newArr} onClick={generateArr} disabled={isLocked} />
       </div>
-      <ul className={styles.columns}>
+      <ul className={styles.columns} data-testid="array">
         {arr?.map((item, i) => {
-          return <Column index={item} extraClass={styles.column} state={columnStates[i]} key={i} />;
+          return <Column index={item} extraClass={styles.column} state={columnStates[i]} key={i}/>;
         })}
       </ul>
     </SolutionLayout>
