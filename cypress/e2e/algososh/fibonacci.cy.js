@@ -1,5 +1,6 @@
+import { baseUrl } from "../constants";
 describe("fibonaci page working correctly", function () {
-  beforeEach(() => cy.visit("http://localhost:3000/fibonacci"));
+  beforeEach(() => cy.visit(`${baseUrl}/fibonacci`));
   it("reverse button should be locked", () => {
     cy.get("input").should("be.empty");
     cy.get("button").contains("Рассчитать").parent().should("be.disabled");

@@ -1,7 +1,7 @@
-
+import { baseUrl, circleChanging, circleModified } from "../constants";
 
 describe("string page working correctly", function () {
-  beforeEach(() => cy.visit("http://localhost:3000/recursion"));
+  beforeEach(() => cy.visit(`${baseUrl}/recursion`));
   it("reverse button should be locked", () => {
     cy.get("input").should("be.empty");
     cy.get("button").contains("Развернуть").parent().should("be.disabled");
@@ -17,22 +17,22 @@ describe("string page working correctly", function () {
     cy.get("button").contains("Развернуть").click();
 
     cy.get("@first").should("have.text", "r");
-    cy.get("@first").children("[class*=circle_changing]");
+    cy.get("@first").children(circleChanging);
     cy.get("@fourth").should("have.text", "q");
-    cy.get("@fourth").children("[class*=circle_changing]");
+    cy.get("@fourth").children(circleChanging);
 
     cy.wait(1000);
 
-    cy.get("@first").children("[class*=circle_modified]");
-    cy.get("@fourth").children("[class*=circle_modified]");
-    cy.get("@second").children("[class*=circle_changing]");
-    cy.get("@third").children("[class*=circle_changing]");
+    cy.get("@first").children(circleModified);
+    cy.get("@fourth").children(circleModified);
+    cy.get("@second").children(circleChanging);
+    cy.get("@third").children(circleChanging);
 
     cy.wait(1000);
 
     cy.get("@second").should("have.text", "e");
     cy.get("@third").should("have.text", "w");
-    cy.get("@second").children("[class*=circle_modified]");
-    cy.get("@third").children("[class*=circle_modified]");
+    cy.get("@second").children(circleModified);
+    cy.get("@third").children(circleModified);
   });
 });

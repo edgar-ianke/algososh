@@ -1,5 +1,15 @@
+import {
+  baseUrl,
+  circleDefault,
+  circleChanging,
+  circleContent,
+  circleHead,
+  circleTail,
+  circleCircle,
+} from "../constants";
+
 describe("stack page working correctly", function () {
-  beforeEach(() => cy.visit("http://localhost:3000/queue"));
+  beforeEach(() => cy.visit(`${baseUrl}/queue`));
   it("add button should be disabled with empty input", () => {
     cy.get("input").should("be.empty");
     cy.get("button").contains("Добавить").parent().should("be.disabled");
@@ -14,14 +24,14 @@ describe("stack page working correctly", function () {
       cy.get("@input").type(i);
       cy.get("@add").click();
       length++;
-      cy.get("[class*=circle_content]").eq(i).children("[class*=circle_changing]");
+      cy.get(circleContent).eq(i).children(circleChanging);
       if (i === 0) {
-        cy.get("[class*=circle_content]").eq(i).children("[class*=circle_head]").should("have.text", "head");
+        cy.get(circleContent).eq(i).children(circleHead).should("have.text", "head");
       }
-      cy.get("[class*=circle_content]").eq(i).children("[class*=circle_tail]").should("have.text", "tail");
-      cy.get("[class*=circle_circle]").eq(i).should("have.text", i);
+      cy.get(circleContent).eq(i).children(circleTail).should("have.text", "tail");
+      cy.get(circleCircle).eq(i).should("have.text", i);
       cy.wait(500);
-      cy.get("[class*=circle_content]").eq(i).children("[class*=circle_default]");
+      cy.get(circleContent).eq(i).children(circleDefault);
     }
     cy.get("@container")
       .get("[class*=text_type_circle]")
@@ -31,10 +41,10 @@ describe("stack page working correctly", function () {
       .should("have.length", length);
     cy.get("@delete").click();
     length--;
-    cy.get("@container").children().eq(0).children("[class*=circle_changing]");;
+    cy.get("@container").children().eq(0).children(circleChanging);;
     cy.wait(500);
-    cy.get("@container").children().eq(0).children("[class*=circle_default]");
-    cy.get("@container").children().eq(1).children("[class*=circle_head]").should("have.text", "head");
+    cy.get("@container").children().eq(0).children(circleDefault);
+    cy.get("@container").children().eq(1).children(circleHead).should("have.text", "head");
     cy.get("@container")
       .get("[class*=text_type_circle]")
       .filter((index, element) => {

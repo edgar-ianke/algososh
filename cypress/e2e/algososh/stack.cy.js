@@ -1,7 +1,16 @@
+import {
+  baseUrl,
+  circleDefault,
+  circleChanging,
+  circleContent,
+  circleHead,
+  circleCircle,
+} from "../constants";
+
 const { wait } = require("@testing-library/user-event/dist/utils");
 
 describe("stack page working correctly", function () {
-  beforeEach(() => cy.visit("http://localhost:3000/stack"));
+  beforeEach(() => cy.visit(`${baseUrl}/stack`));
   it("add button should be disabled with empty input", () => {
     cy.get("input").should("be.empty");
     cy.get("button").contains("Добавить").parent().should("be.disabled");
@@ -14,19 +23,19 @@ describe("stack page working correctly", function () {
     for (let i = 0; i < 6; i++) {
       cy.get("@input").type(i);
       cy.get("@add").click();
-      cy.get("[class*=circle_circle]").last().should("have.text", i);
-      cy.get("[class*=circle_changing]").last().should("have.text", i);
+      cy.get(circleCircle).last().should("have.text", i);
+      cy.get(circleChanging).last().should("have.text", i);
       cy.wait(500);
-      cy.get("[class*=circle_default]").last().should("have.text", i);
-      cy.get("[class*=circle_content]").last().children("[class*=circle_head]").should("have.text", "top");
+      cy.get(circleDefault).last().should("have.text", i);
+      cy.get(circleContent).last().children(circleHead).should("have.text", "top");
     }
     cy.get("@container").children().should("have.length", 6);
     cy.get("@delete").click();
-    cy.get("[class*=circle_circle]").last().should("have.text", "5");
-    cy.get("[class*=circle_changing]").last().should("have.text", "5");
+    cy.get(circleCircle).last().should("have.text", "5");
+    cy.get(circleChanging).last().should("have.text", "5");
     wait(500);
-    cy.get("[class*=circle_circle]").last().should("have.text", "4");
-    cy.get("[class*=circle_content]").last().children("[class*=circle_head]").should("have.text", "top");
+    cy.get(circleCircle).last().should("have.text", "4");
+    cy.get(circleContent).last().children(circleHead).should("have.text", "top");
   });
   it("reset button is working correctly", () => {
     cy.get("input").as("input");
