@@ -61,7 +61,7 @@ export const FibonacciPage: React.FC = () => {
           type="number"
           isLimitText={true}
         />
-        <Button text="Рассчитать" onClick={handleClick} disabled={isLocked} isLoader={isLocked}/>
+        <Button text="Рассчитать" onClick={handleClick} disabled={isLocked || value.length === 0} isLoader={isLocked}/>
       </div>
       <ul className={styles.circleContainer}>
         {sequence.map((item, i) => {

@@ -23,14 +23,14 @@ export const StringComponent: React.FC = () => {
     arr[secondIndex] = temp;
   }
 
-  const changeColor = (color: ElementStates , firstIndex: number, secondIndex:number) => {
-  setCircleStates(prevStates => {
-        const updatedStates = [...prevStates];
-        updatedStates[firstIndex] = color
-        updatedStates[secondIndex] = color
-        return updatedStates;
-      });
-}
+  const changeColor = (color: ElementStates, firstIndex: number, secondIndex: number) => {
+    setCircleStates((prevStates) => {
+      const updatedStates = [...prevStates];
+      updatedStates[firstIndex] = color;
+      updatedStates[secondIndex] = color;
+      return updatedStates;
+    });
+  };
 
   const handleClick = async () => {
     setLocked(true);
@@ -39,23 +39,35 @@ export const StringComponent: React.FC = () => {
     let end = string.length - 1;
     let start = 0;
     while (start <= end) {
+      changeColor(ElementStates.Changing, start, end);
       swap(res, start, end);
-      changeColor(ElementStates.Changing, start, end)
       await delay(DELAY_IN_MS);
-      changeColor(ElementStates.Modified, start, end)
+      changeColor(ElementStates.Modified, start, end);
       setString([...res]);
       start++;
       end--;
     }
-   setLocked(false);
+    setLocked(false);
   };
   return (
     <SolutionLayout title="Строка">
       <div className={styles.input}>
-        <Input placeholder="Введите текст" value={string.join("")} onChange={onChange} maxLength={11} isLimitText={true}/>
-        <Button text="Развернуть" onClick={handleClick} isLoader={locked} disabled={string.length > 0 && !locked ? false : true} />
+        <Input
+          placeholder="Введите текст"
+          value={string.join("")}
+          onChange={onChange}
+          maxLength={11}
+          isLimitText={true}
+        />
+        <Button
+          data-testid="button"
+          text="Развернуть"
+          onClick={handleClick}
+          isLoader={locked}
+          disabled={string.length > 0 && !locked ? false : true}
+        />
       </div>
-      <ul className={styles.circleContainer}>
+      <ul className={styles.circleContainer} data-testid="circle-list">
         {string.map((letter, i) => {
           return <Circle letter={letter} key={i} state={circleStates[i]} />;
         })}
