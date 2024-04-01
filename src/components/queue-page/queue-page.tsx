@@ -59,7 +59,13 @@ export const QueuePage: React.FC = () => {
         <Input placeholder="Введите значение" value={value} onChange={onChange} maxLength={4} isLimitText={true} />
         <Button text="Добавить" onClick={enqueue} disabled={value.length > 0 ? false : true} isLoader={loader.add} />
         <Button text="Удалить" onClick={dequeue} disabled={queue.length > 0 ? false : true} isLoader={loader.delete} />
-        <Button text="Очистить" extraClass={styles.resetButton} onClick={reset} isLoader={loader.reset} />
+        <Button
+          text="Очистить"
+          extraClass={styles.resetButton}
+          onClick={reset}
+          isLoader={loader.reset}
+          disabled={queue.length > 0 ? false : true}
+        />
       </div>
       <ul className={styles.circleContainer}>
         {queue.getData().map((letter, i) => {
